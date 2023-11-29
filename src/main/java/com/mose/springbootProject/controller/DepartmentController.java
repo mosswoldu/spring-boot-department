@@ -26,18 +26,18 @@ public class DepartmentController {
         return new ResponseEntity<>(deptService.getAllDepartments(),HttpStatus.OK);
     }
 
-//    @GetMapping("{id}")
-//    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id) {
-//        Optional<Department> departmentOptional = deptService.getDepartmentById(id);
-//
-//        return departmentOptional
-//                .map(department -> new ResponseEntity<>(department, HttpStatus.OK))
-//                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
     @GetMapping("{id}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id){
-        return  new ResponseEntity<>(deptService.getDepartmentById(id),HttpStatus.OK);
+    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id) {
+        Optional<Department> departmentOptional = deptService.getDepartmentById(id);
+
+        return departmentOptional
+                .map(department -> new ResponseEntity<>(department, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+//    @GetMapping("{id}")
+//    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id){
+//        return  new ResponseEntity<>(deptService.getDepartmentById(id),HttpStatus.OK);
+//    }
 
 
 }

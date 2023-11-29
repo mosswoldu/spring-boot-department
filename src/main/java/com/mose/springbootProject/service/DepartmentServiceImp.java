@@ -22,10 +22,10 @@ public class DepartmentServiceImp implements DepartmentService{
         return depRepository.findAll();
     }
 
-//    public Optional<Department> getDepartmentById(long id) {
-//        return depRepository.findById(id);
-//    }
-    public Department getDepartmentById(Long id) {
-        return depRepository.findById(id).get();
+    public Optional<Department> getDepartmentById(long id) {
+        return depRepository.findById(id);
     }
-}
+//    public Department getDepartmentById(Long id) {
+//        return depRepository.findById(id).get();
+//    }
+  }
