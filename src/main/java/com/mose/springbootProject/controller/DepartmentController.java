@@ -3,6 +3,7 @@ package com.mose.springbootProject.controller;
 
 import com.mose.springbootProject.model.Department;
 import com.mose.springbootProject.service.DepartmentServiceImp;
+import exception.DepartmentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +28,61 @@ public class DepartmentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id) {
-        Optional<Department> departmentOptional = deptService.getDepartmentById(id);
-
-        return departmentOptional
-                .map(department -> new ResponseEntity<>(department, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long deptId) {
+        Optional<Department> departmentOptional = deptService.getDepartmentById(deptId);
+           // method 1
+//        return departmentOptional
+//                .map(department -> new ResponseEntity<>(department, HttpStatus.OK))
+//                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        // method 2
+        if(departmentOptional.isPresent()){
+            Department department=departmentOptional.get();
+            return new ResponseEntity<>(department,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-//    @GetMapping("{id}")
-//    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id){
-//        return  new ResponseEntity<>(deptService.getDepartmentById(id),HttpStatus.OK);
-//    }
+     //method 1
+     /* public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id){
+        return  new ResponseEntity<>(deptService.getDepartmentById(id),HttpStatus.OK);
+    }*/
+
+   /* public ResponseEntity<Department> updateDepartment(Department department, Long id){
+        return new ResponseEntity<>(department.updateDepartment(),HttpStatus.OK);
+    }*/
+
+//@PutMapping("{id}")
+/*public ResponseEntity<Department> updateDepartment(@PathVariable("id") Long deptId,
+ @RequestBody Department department) {
+    try {
+        Department updatedDepartment = deptService.updateDepartment(deptId, department);
+        return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
+    } catch (DepartmentNotFoundException e) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+}*/
+
+    @PutMapping("{id}")
+    public ResponseEntity<Department> updateDepartment(@PathVariable("id") Long deptId, @RequestBody Department department) {
+        try {
+            Department updatedDepartment = deptService.updateDepartment(deptId, department);
+            return ResponseEntity.ok(updatedDepartment);
+        } catch (DepartmentNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+       //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //a custom message
+        }
+    }
+
+    @DeleteMapping("{id}")
+
+public ResponseEntity<String> deleteDepartment(@PathVariable("id") Long deptId) {
+    try {
+        deptService.deleteDepartment(deptId);
+        return ResponseEntity.ok("Department deleted successfully");
+    } catch (DepartmentNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+}
 
 
 }

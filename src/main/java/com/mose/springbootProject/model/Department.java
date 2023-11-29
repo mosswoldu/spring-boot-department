@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Department {
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   private Long deptId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long deptId;
     private String deptName;
     private String deptAddress;
     private String deptCode;
@@ -29,4 +29,5 @@ public class Department {
                 ", deptCode='" + deptCode + '\'' +
                 '}';
     }
+
 }
