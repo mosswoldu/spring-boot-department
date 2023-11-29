@@ -60,28 +60,31 @@ public class DepartmentServiceImp implements DepartmentService{
 //        }
 //        return depRepository.save(deptDB);
 //    }
-public Department updateDepartment(Long deptId, Department department) {
-    Optional<Department> optionalDepartment = depRepository.findById(deptId);
 
-    if (optionalDepartment.isPresent()) {
-        Department deptDB = optionalDepartment.get();
+    public Department updateDepartment(Long deptId, Department department) {
+        Optional<Department> optionalDepartment = depRepository.findById(deptId);
 
-        // Your update logic here...
-        if (Objects.nonNull(department.getDeptName()) && !"".equalsIgnoreCase(department.getDeptName())) {
-            deptDB.setDeptName(department.getDeptName());
-        }
-        if (Objects.nonNull(department.getDeptAddress()) && !"".equalsIgnoreCase(department.getDeptAddress())) {
-            deptDB.setDeptAddress(department.getDeptAddress());
-        }
-        if (Objects.nonNull(department.getDeptCode()) && !"".equalsIgnoreCase(department.getDeptCode())) {
-            deptDB.setDeptCode(department.getDeptCode());
-        }
+        if (optionalDepartment.isPresent()) {
+            Department deptDB = optionalDepartment.get();
+            
+            if (Objects.nonNull(department.getDeptName()) && !"".equalsIgnoreCase(department.getDeptName())) {
+                deptDB.setDeptName(department.getDeptName());
+            }
+            if (Objects.nonNull(department.getDeptAddress()) && !"".equalsIgnoreCase(department.getDeptAddress())) {
+                deptDB.setDeptAddress(department.getDeptAddress());
+            }
+            if (Objects.nonNull(department.getDeptCode()) && !"".equalsIgnoreCase(department.getDeptCode())) {
+                deptDB.setDeptCode(department.getDeptCode());
+            }
 
-        return depRepository.save(deptDB);
-    } else {
-        // Throw a custom exception if the department is not found
-        throw new DepartmentNotFoundException("Department with ID " + deptId + " not found");
+            return depRepository.save(deptDB);
+        } else {
+            // Throw a custom exception if the department is not found
+            throw new DepartmentNotFoundException("Department with ID " + deptId + " not found");
+        }
     }
-}
 
+    public Optional<Department> getDepartmentByCode(String deptCode) {
+        return Optional.ofNullable(depRepository.findByDeptCode(deptCode));
+    }
 }

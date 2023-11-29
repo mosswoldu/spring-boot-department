@@ -84,5 +84,27 @@ public ResponseEntity<String> deleteDepartment(@PathVariable("id") Long deptId) 
     }
 }
 
+//@GetMapping("/code/{code}")
+//    public ResponseEntity<Department>getDepartmentByCode(@PathVariable("code") String deptCode){
+//        Optional<Department>optionalDepartment=deptService.getDepartmentByCode(deptCode);
+//        if(optionalDepartment.isPresent()){
+//            Department department=optionalDepartment.get();
+//            return new ResponseEntity<>(department,HttpStatus.OK);
+//        }else{
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//}
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Department> getDepartmentByCode(@PathVariable("code") String deptCode) {
+        Department department = deptService.getDepartmentByCode(deptCode).orElse(null);
+
+        if (department != null) {
+            return new ResponseEntity<>(department, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }
