@@ -4,12 +4,7 @@ import com.mose.springbootProject.model.Department;
 import com.mose.springbootProject.repository.DepartmentRepository;
 import exception.DepartmentNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -85,6 +80,7 @@ public class DepartmentServiceImp implements DepartmentService{
     }
 
     public Optional<Department> getDepartmentByCode(String deptCode) {
-        return Optional.ofNullable(depRepository.findByDeptCode(deptCode));
+       // return Optional.ofNullable(depRepository.findByDeptCode(deptCode));
+        return Optional.ofNullable(depRepository.findByDeptCodeIgnoreCase(deptCode));
     }
 }

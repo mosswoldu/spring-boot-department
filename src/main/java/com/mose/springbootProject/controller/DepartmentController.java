@@ -4,7 +4,10 @@ package com.mose.springbootProject.controller;
 import com.mose.springbootProject.model.Department;
 import com.mose.springbootProject.service.DepartmentServiceImp;
 import exception.DepartmentNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +20,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DepartmentController {
     private final DepartmentServiceImp deptService;
+    private final Logger logger= LoggerFactory.getLogger(DepartmentController.class);
     @PostMapping
-    public ResponseEntity<Department> saveDepartment(@RequestBody Department department){
-
+    public ResponseEntity<Department> saveDepartment(@Valid @RequestBody Department department){
+        logger.info("Department saved");
         return new ResponseEntity<>(deptService.saveDepart(department), HttpStatus.OK);
     }
     @GetMapping("/all")
     public ResponseEntity<List<Department>> getAllDepartments(){
+        logger.info("Inside get all departments of DepartmentController class");
+       // logger.debug("debug DepartmentController class");
         return new ResponseEntity<>(deptService.getAllDepartments(),HttpStatus.OK);
     }
 
