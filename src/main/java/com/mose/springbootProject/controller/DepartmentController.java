@@ -2,8 +2,10 @@ package com.mose.springbootProject.controller;
 
 
 import com.mose.springbootProject.model.Department;
+import com.mose.springbootProject.service.DepartmentService;
 import com.mose.springbootProject.service.DepartmentServiceImp;
-import exception.DepartmentNotFoundException;
+import com.mose.springbootProject.exception.DepartmentNotFoundException;
+import com.mose.springbootProject.exception.DepartmentNotFoundExceptions;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("api/dpt")
 @RequiredArgsConstructor
 public class DepartmentController {
-    private final DepartmentServiceImp deptService;
+    private final DepartmentService deptService;
     private final Logger logger= LoggerFactory.getLogger(DepartmentController.class);
     @PostMapping
     public ResponseEntity<Department> saveDepartment(@Valid @RequestBody Department department){
@@ -48,10 +50,16 @@ public class DepartmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-     //method 1
+     //method 3
      /* public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Long id){
         return  new ResponseEntity<>(deptService.getDepartmentById(id),HttpStatus.OK);
     }*/
+
+    @GetMapping("/departments/{id}")
+    public Department fetchDepartmentById(@PathVariable("id") Long deptId)
+            throws DepartmentNotFoundExceptions {
+        return deptService.fetchDepartmentById(deptId);
+    }
 
    /* public ResponseEntity<Department> updateDepartment(Department department, Long id){
         return new ResponseEntity<>(department.updateDepartment(),HttpStatus.OK);

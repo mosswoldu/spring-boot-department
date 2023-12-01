@@ -2,7 +2,8 @@ package com.mose.springbootProject.service;
 
 import com.mose.springbootProject.model.Department;
 import com.mose.springbootProject.repository.DepartmentRepository;
-import exception.DepartmentNotFoundException;
+import com.mose.springbootProject.exception.DepartmentNotFoundException;
+import com.mose.springbootProject.exception.DepartmentNotFoundExceptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -29,6 +30,17 @@ public class DepartmentServiceImp implements DepartmentService{
 //    public Department getDepartmentById(Long id) {
 //        return depRepository.findById(id).get();
 //    }
+
+    public Department fetchDepartmentById(Long deptId) throws DepartmentNotFoundExceptions {
+        Optional<Department> department =
+                depRepository.findById(deptId);
+
+        if(!department.isPresent()) {
+            throw new DepartmentNotFoundExceptions("Department Not Available");
+        }
+
+        return  department.get();
+    }
 
    @Override
    public void deleteDepartment(Long deptId) {
