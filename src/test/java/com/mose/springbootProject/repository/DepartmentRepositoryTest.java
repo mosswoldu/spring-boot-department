@@ -42,9 +42,9 @@ class DepartmentRepositoryTest {
 
     @Test
     public void whenValidById_thenReturnDepartment(){
-        Department  dept=departmentRepository.findById(1L).get();
+        Department  dept=departmentRepository.findById(2L).get();
 
-        assertEquals(dept.getDeptName(),"Biology");
+        assertEquals(dept.getDeptName(),"Physiology");
     }
 
 }

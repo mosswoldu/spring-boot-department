@@ -1,0 +1,65 @@
+
+server:
+  port: 8282
+
+---
+spring:
+  profiles:
+    active: qa
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: mussiewoldu
+    url: jdbc:mysql://localhost:3306/department
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+com:
+  mose: '"Olla Mundo from ASM !!"'
+
+---
+spring:
+  config:
+    activate:
+      on-profile: qa
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: mussiewoldu
+    url: jdbc:mysql://localhost:3306/department-qa
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+com:
+  mose: '"Olla Mundo from ASM !!"'
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: mussiewoldu
+    url: jdbc:mysql://localhost:3306/department-prod
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+com:
+  mose: '"Olla Mundo from ASM !!"'
+
